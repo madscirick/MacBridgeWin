@@ -1,10 +1,35 @@
 # MacBridgeWin
 
+<p align="center">
+  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip">
+    <img alt="Download MacBridgeWin v0.1.0 for Windows" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.0-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
+  </a>
+</p>
+
+<p align="center"><strong>Windows 10/11 · Version v0.1.0 · Released 2026-08-07</strong></p>
+
 MacBridgeWin is a lightweight Windows 10/11 tray application for people who move between macOS and Windows. It brings selected macOS-style interactions to Windows while deliberately preserving native Windows behavior.
 
 [简体中文](README.zh-CN.md) · [Privacy](PRIVACY.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
 
 > **Status:** early, source-first release. The project is functional but does not yet provide an installer or signed binaries.
+
+## Download for Windows
+
+**Most users should download the ready-to-run release, not the repository source code.**
+
+### [Download MacBridgeWin v0.1.0 for Windows (ZIP)](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip)
+
+1. Download the ZIP above and extract the entire archive.
+2. Run `MacBridgeWin.App.exe` from the extracted folder.
+3. MacBridgeWin starts in the notification area; open **Settings** from its tray menu.
+
+> [!WARNING]
+> Do **not** use GitHub's green **Code → Download ZIP** button or the automatically generated **Source code (zip)** asset unless you intend to build the application yourself. Those downloads contain source code, not a runnable release.
+
+[View the v0.1.0 release page](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) · [SHA-256 checksum](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip.sha256)
+
+**Release date:** 2026-08-07
 
 ## What it does
 
