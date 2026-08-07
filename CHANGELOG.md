@@ -2,6 +2,14 @@
 
 All notable changes to MacBridgeWin are documented in this file.
 
+## 0.1.1 - 2026-08-07
+
+### Changed
+
+- Windows releases now use self-contained single-file publishing. After extraction, users only need to run `MacBridgeWin.App.exe`.
+- Added an automated release check that rejects unexpected extra files in the publish output.
+- Made the ready-to-run download link more prominent in the English and Chinese README files.
+
 ## 0.1.0 - 2026-08-05
 
 ### Added

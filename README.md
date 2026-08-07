@@ -1,12 +1,12 @@
 # MacBridgeWin
 
 <p align="center">
-  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip">
-    <img alt="Download MacBridgeWin v0.1.0 for Windows" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.0-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
+  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip">
+    <img alt="Download MacBridgeWin v0.1.1 for Windows" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.1-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
   </a>
 </p>
 
-<p align="center"><strong>Windows 10/11 · Version v0.1.0 · Released 2026-08-07</strong></p>
+<p align="center"><strong>Windows 10/11 · Version v0.1.1 · Released 2026-08-07</strong></p>
 
 MacBridgeWin is a lightweight Windows 10/11 tray application for people who move between macOS and Windows. It brings selected macOS-style interactions to Windows while deliberately preserving native Windows behavior.
 
@@ -18,7 +18,7 @@ MacBridgeWin is a lightweight Windows 10/11 tray application for people who move
 
 **Most users should download the ready-to-run release, not the repository source code.**
 
-### [Download MacBridgeWin v0.1.0 for Windows (ZIP)](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip)
+### [Download MacBridgeWin v0.1.1 for Windows (ZIP)](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip)
 
 1. Download the ZIP above and extract the entire archive.
 2. Run `MacBridgeWin.App.exe` from the extracted folder.
@@ -27,7 +27,7 @@ MacBridgeWin is a lightweight Windows 10/11 tray application for people who move
 > [!WARNING]
 > Do **not** use GitHub's green **Code → Download ZIP** button or the automatically generated **Source code (zip)** asset unless you intend to build the application yourself. Those downloads contain source code, not a runnable release.
 
-[View the v0.1.0 release page](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) · [SHA-256 checksum](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip.sha256)
+[View the v0.1.1 release page](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) · [SHA-256 checksum](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip.sha256)
 
 **Release date:** 2026-08-07
 
@@ -77,7 +77,7 @@ Published output is intentionally excluded from Git. Build it locally or obtain 
 1. Download the `MacBridgeWin-<version>-win-x64.zip` file from GitHub Releases.
 2. Optionally verify its SHA-256 value against the adjacent `.sha256` file.
 3. Extract the entire archive to a folder you control.
-4. Run `MacBridgeWin.App.exe`; the app starts in the notification area.
+4. Run the single `MacBridgeWin.App.exe` file; the app starts in the notification area.
 
 MacBridgeWin does not currently ship an installer or a code-signed executable. Windows SmartScreen may therefore show a warning. Review the source and release checksum before deciding whether to run it. Never disable Windows security software to install MacBridgeWin.
 

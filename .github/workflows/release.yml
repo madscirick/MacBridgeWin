@@ -42,9 +42,21 @@ jobs:
             --self-contained true `
             --no-restore `
             -p:Version=$version `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:EnableCompressionInSingleFile=true `
             -p:DebugType=None `
             -p:DebugSymbols=false `
             -o artifacts\publish
+
+      - name: Verify single-file output
+        shell: pwsh
+        run: |
+          $files = @(Get-ChildItem artifacts\publish -File)
+          if ($files.Count -ne 1 -or $files[0].Name -ne "MacBridgeWin.App.exe") {
+            $names = $files.Name -join ", "
+            throw "Expected only MacBridgeWin.App.exe, found: $names"
+          }
 
       - name: Package and checksum
         shell: pwsh

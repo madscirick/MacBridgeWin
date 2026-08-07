@@ -1,18 +1,18 @@
 # MacBridgeWin
 
 <p align="center">
-  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip">
-    <img alt="下载 MacBridgeWin v0.1.0 Windows 版" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.0-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
+  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip">
+    <img alt="下载 MacBridgeWin v0.1.1 Windows 版" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.1-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
   </a>
 </p>
 
-<p align="center"><strong>Windows 10/11 · 版本 v0.1.0 · 发布日期 2026-08-07</strong></p>
+<p align="center"><strong>Windows 10/11 · 版本 v0.1.1 · 发布日期 2026-08-07</strong></p>
 
 ## Windows 用户下载
 
 **普通用户请下载已经构建好的运行版本，不要下载仓库源码包。**
 
-### [下载 MacBridgeWin v0.1.0 Windows 版（ZIP）](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip)
+### [下载 MacBridgeWin v0.1.1 Windows 版（ZIP）](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip)
 
 1. 下载上面的 ZIP，并完整解压到一个文件夹。
 2. 在解压后的文件夹中运行 `MacBridgeWin.App.exe`。
@@ -21,7 +21,7 @@
 > [!WARNING]
 > 除非你准备自己编译程序，否则不要使用 GitHub 绿色 **Code → Download ZIP** 按钮，也不要下载自动生成的 **Source code (zip)**。这些文件是源码，不是可以直接运行的软件。
 
-[查看 v0.1.0 Release 页面](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) · [SHA-256 校验文件](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip.sha256)
+[查看 v0.1.1 Release 页面](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) · [SHA-256 校验文件](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip.sha256)
 
 **发布日期：** 2026-08-07
 
@@ -51,7 +51,7 @@ dotnet run --project src\MacBridgeWin.App\MacBridgeWin.App.csproj -c Release
 
 1. 从 GitHub Releases 下载 `MacBridgeWin-<版本>-win-x64.zip`。
 2. 可使用同名 `.sha256` 文件核对下载文件。
-3. 完整解压后运行 `MacBridgeWin.App.exe`。
+3. 完整解压后直接运行唯一的 `MacBridgeWin.App.exe`。
 
 当前可执行文件尚未进行代码签名，因此 Windows SmartScreen 可能显示提醒。请先核对下载来源、源码和校验值，再决定是否运行。不要为了安装本软件而关闭 Windows 安全软件。
 
