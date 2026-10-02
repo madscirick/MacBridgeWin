@@ -1,18 +1,18 @@
 # MacBridgeWin
 
 <p align="center">
-  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip">
-    <img alt="下载 MacBridgeWin v0.1.1 Windows 版" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.1-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
+  <a href="https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip">
+    <img alt="下载 MacBridgeWin v0.1.2 Windows 版" src="https://img.shields.io/badge/普通用户下载-MacBridgeWin%20v0.1.2-1677FF?style=for-the-badge&logo=windows11&logoColor=white">
   </a>
 </p>
 
-<p align="center"><strong>Windows 10/11 · 版本 v0.1.1 · 发布日期 2026-08-07</strong></p>
+<p align="center"><strong>Windows 10/11 · 版本 v0.1.2 · 发布日期 2026-10-02</strong></p>
 
 ## Windows 用户下载
 
 **普通用户请下载已经构建好的运行版本，不要下载仓库源码包。**
 
-### [下载 MacBridgeWin v0.1.1 Windows 版（ZIP）](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip)
+### [下载 MacBridgeWin v0.1.2 Windows 版（ZIP）](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip)
 
 1. 下载上面的 ZIP，并完整解压到一个文件夹。
 2. 在解压后的文件夹中运行 `MacBridgeWin.App.exe`。
@@ -21,9 +21,21 @@
 > [!WARNING]
 > 除非你准备自己编译程序，否则不要使用 GitHub 绿色 **Code → Download ZIP** 按钮，也不要下载自动生成的 **Source code (zip)**。这些文件是源码，不是可以直接运行的软件。
 
-[查看 v0.1.1 Release 页面](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) · [SHA-256 校验文件](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip.sha256)
+[查看 v0.1.2 Release 页面](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.2) · [SHA-256 校验文件](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip.sha256)
 
-**发布日期：** 2026-08-07
+**发布日期：** 2026-10-02
+
+## 历史版本
+
+建议使用最新版，以获得右键修复和性能优化；需要回退时，也可以下载历史版本。
+
+| 版本 | 发布日期 | 主要变化 | Windows x64 下载 | 发布说明 |
+| --- | --- | --- | --- | --- |
+| **v0.1.2（最新）** | 2026-10-02 | 修复右键菜单被吞掉的问题，降低鼠标钩子处理开销 | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.2) |
+| v0.1.1 | 2026-08-07 | 单文件发布，无需单独安装 .NET | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) |
+| v0.1.0 | 2026-08-07 | 首个功能版本：键盘映射、鼠标手势和托盘设置 | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) |
+
+[查看全部历史版本](https://github.com/madscirick/MacBridgeWin/releases)。各版本发布页面同时提供 SHA-256 校验文件。切换版本前，请先退出正在运行的软件。
 
 MacBridgeWin 是一款面向经常在 macOS 与 Windows 之间切换的用户的轻量 Windows 10/11 托盘工具。它让部分操作更接近 macOS，同时尽量保留 Windows 原生行为。
 

@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MacBridgeWin.Core\MacBridgeWin.Core.csproj" />
+    <Compile Include="..\..\src\MacBridgeWin.App\Services\Mouse\MouseHookService.cs" Link="MouseHookService.cs" />
+    <Compile Include="..\..\src\MacBridgeWin.App\Services\Mouse\SyntheticMouseInputSender.cs" Link="SyntheticMouseInputSender.cs" />
   </ItemGroup>
 
 </Project>
