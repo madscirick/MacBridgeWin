@@ -25,6 +25,18 @@
 
 **发布日期：** 2026-10-02
 
+## 历史版本
+
+建议使用最新版，以获得右键修复和性能优化；需要回退时，也可以下载历史版本。
+
+| 版本 | 主要变化 | Windows x64 下载 | 发布说明 |
+| --- | --- | --- | --- |
+| **v0.1.2（最新）** | 修复右键菜单被吞掉的问题，降低鼠标钩子处理开销 | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.2) |
+| v0.1.1 | 单文件发布，无需单独安装 .NET | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) |
+| v0.1.0 | 首个功能版本：键盘映射、鼠标手势和托盘设置 | [ZIP 下载](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip) | [详情](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) |
+
+[查看全部历史版本](https://github.com/madscirick/MacBridgeWin/releases)。各版本发布页面同时提供 SHA-256 校验文件。切换版本前，请先退出正在运行的软件。
+
 MacBridgeWin 是一款面向经常在 macOS 与 Windows 之间切换的用户的轻量 Windows 10/11 托盘工具。它让部分操作更接近 macOS，同时尽量保留 Windows 原生行为。
 
 > **当前状态：** 早期版本。功能已经可以使用，但目前没有安装程序和代码签名。

@@ -31,6 +31,18 @@ MacBridgeWin is a lightweight Windows 10/11 tray application for people who move
 
 **Release date:** 2026-10-02
 
+## Version history
+
+Use the latest version for the right-click fixes and performance improvements. Earlier versions remain available if you need to roll back.
+
+| Version | Main changes | Windows x64 download | Release notes |
+| --- | --- | --- | --- |
+| **v0.1.2 (latest)** | Right-click preservation fixes and reduced mouse hook overhead | [ZIP](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.2/MacBridgeWin-v0.1.2-win-x64.zip) | [Details](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.2) |
+| v0.1.1 | Self-contained single-file publishing; no separate .NET installation required | [ZIP](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.1/MacBridgeWin-v0.1.1-win-x64.zip) | [Details](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.1) |
+| v0.1.0 | Initial release with keyboard mappings, mouse gestures, and tray settings | [ZIP](https://github.com/madscirick/MacBridgeWin/releases/download/v0.1.0/MacBridgeWin-v0.1.0-win-x64.zip) | [Details](https://github.com/madscirick/MacBridgeWin/releases/tag/v0.1.0) |
+
+[View all releases](https://github.com/madscirick/MacBridgeWin/releases). Each release page also includes a SHA-256 checksum file. Exit the running application before switching versions.
+
 ## What it does
 
 - Maps selected `Alt` shortcuts to familiar `Ctrl` shortcuts, while preserving native `Ctrl` shortcuts, `Alt+Tab`, and `Alt+F4`.
