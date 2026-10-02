@@ -8,7 +8,6 @@ namespace MacBridgeWin.App.Services.Mouse;
 public sealed class MouseGestureService : IDisposable
 {
     private readonly BasicDirectionalGestureRecognizer _recognizer = new();
-    private readonly GestureActionExecutor _actionExecutor;
     private readonly SyntheticMouseInputSender _mouseInputSender = new();
     private readonly MouseGestureFeedbackService _feedbackService;
     private readonly FileLogger _logger;
@@ -16,7 +15,7 @@ public sealed class MouseGestureService : IDisposable
     private readonly Func<string?> _getActiveProcessName;
     private readonly Func<int, int, string?> _getProcessNameFromPoint;
     private MouseHookService? _hookService;
-    private AppConfiguration _appConfiguration = ConfigurationDefaults.Create();
+    private volatile AppConfiguration _appConfiguration = ConfigurationDefaults.Create();
     private MouseGestureConfiguration _configuration = new();
     private bool _enabled;
 
@@ -30,14 +29,11 @@ public sealed class MouseGestureService : IDisposable
         _getActiveProcessName = getActiveProcessName;
         _getProcessNameFromPoint = getProcessNameFromPoint;
         _feedbackService = feedbackService;
-        _actionExecutor = new GestureActionExecutor(logger);
     }
 
     public void ApplyConfiguration(AppConfiguration configuration)
     {
         _appConfiguration = configuration;
-        _configuration = configuration.MouseGestures;
-        _actionExecutor.ApplyConfiguration(configuration.MouseGestures);
         _enabled = configuration.Features.MouseGesturesEnabled;
 
         if (_enabled)
@@ -86,23 +82,39 @@ public sealed class MouseGestureService : IDisposable
 
     private GestureRecognitionResult Recognize(IReadOnlyList<GesturePoint> points)
     {
+        var configuration = _appConfiguration;
+        // A movement below every possible profile threshold cannot be a gesture.
+        // Reject it before querying another process or merging profile bindings.
+        var minimumThreshold = configuration.MouseGestures.MovementThresholdPixels;
+        foreach (var profile in configuration.Profiles)
+        {
+            var threshold = profile.MouseGestures.MovementThresholdPixels;
+            if (threshold > 0) minimumThreshold = Math.Min(minimumThreshold, threshold);
+        }
+        if (minimumThreshold > 0 && !BasicDirectionalGestureRecognizer.HasThresholdMovement(points, minimumThreshold))
+        {
+            return GestureRecognitionResult.None;
+        }
         var startPoint = points.Count > 0 ? points[0] : new GesturePoint(0, 0);
-        var processName = _getProcessNameFromPoint(startPoint.X, startPoint.Y) ?? _getActiveProcessName();
-        var resolved = _profileResolver.Resolve(_appConfiguration, processName);
+        var processName = configuration.Profiles.Count == 0 ? null
+            : _getProcessNameFromPoint(startPoint.X, startPoint.Y) ?? _getActiveProcessName();
+        var resolved = _profileResolver.Resolve(configuration, processName);
         _configuration = resolved.MouseGestures;
         var sequence = _recognizer.RecognizeSequence(points, _configuration.MovementThresholdPixels);
-        return GestureRecognitionResult.Recognized(sequence);
+        return GestureBindingResolver.Resolve(_configuration, sequence) is null
+            ? GestureRecognitionResult.None : GestureRecognitionResult.Recognized(sequence);
     }
 
     private void Execute(IReadOnlyList<GestureDirection> sequence)
     {
-        _ = ExecuteAfterMouseReleaseAsync(sequence.ToArray());
+        _ = ExecuteAfterMouseReleaseAsync(sequence.ToArray(), _configuration);
     }
 
-    private async Task ExecuteAfterMouseReleaseAsync(IReadOnlyList<GestureDirection> sequence)
+    private async Task ExecuteAfterMouseReleaseAsync(IReadOnlyList<GestureDirection> sequence, MouseGestureConfiguration configuration)
     {
         await Task.Delay(60).ConfigureAwait(false);
-        _actionExecutor.ApplyConfiguration(_configuration);
-        _actionExecutor.Execute(sequence);
+        var executor = new GestureActionExecutor(_logger);
+        executor.ApplyConfiguration(configuration);
+        executor.Execute(sequence);
     }
 }

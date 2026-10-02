@@ -9,18 +9,18 @@ public sealed class SyntheticMouseInputSender
     private const uint InputMouse = 0;
     private const uint MouseEventFRightDown = 0x0008;
     private const uint MouseEventFRightUp = 0x0010;
+    private static readonly int InputSize = Marshal.SizeOf<Input>();
+    private readonly Input[] _rightClickInputs =
+    [
+        CreateMouseInput(MouseEventFRightDown),
+        CreateMouseInput(MouseEventFRightUp)
+    ];
 
     public void SendRightClick(int x, int y)
     {
         SetCursorPos(x, y);
 
-        var inputs = new[]
-        {
-            CreateMouseInput(MouseEventFRightDown),
-            CreateMouseInput(MouseEventFRightUp)
-        };
-
-        SendInput((uint)inputs.Length, inputs, Marshal.SizeOf<Input>());
+        SendInput((uint)_rightClickInputs.Length, _rightClickInputs, InputSize);
     }
 
     private static Input CreateMouseInput(uint flags)
