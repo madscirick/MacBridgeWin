@@ -2,14 +2,12 @@
 
 All notable changes to MacBridgeWin are documented in this file.
 
-## Unreleased
+## 0.1.2 - 2026-10-02
 
 ### Added
 
 - Chrome navigation defaults: hold the right mouse button, move down then left to go back, or down then right to go forward.
 - Existing Chrome profiles receive missing navigation bindings when loading configuration; customized or disabled bindings are preserved.
-
-## 0.1.2 - 2026-10-02
 
 ### Fixed
 
