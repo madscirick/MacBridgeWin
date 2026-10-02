@@ -24,6 +24,8 @@ public sealed class MouseHookService : IDisposable
     private readonly Action _gestureEnded;
     private readonly List<GesturePoint> _points = [];
     private IntPtr _hookHandle;
+    private Thread? _thread;
+    private uint _threadId;
     private bool _isCapturing;
     private bool _hasGestureMovement;
     private GesturePoint _startPoint;
@@ -48,10 +50,57 @@ public sealed class MouseHookService : IDisposable
 
     public void Start()
     {
-        if (_hookHandle != IntPtr.Zero)
+        if (_thread is not null)
         {
             return;
         }
+
+        using var ready = new ManualResetEventSlim();
+        Exception? failure = null;
+        _thread = new Thread(() =>
+        {
+            try
+            {
+                _threadId = GetCurrentThreadId();
+                PeekMessage(out _, IntPtr.Zero, 0, 0, 0);
+                InstallHook();
+            }
+            catch (Exception ex)
+            {
+                failure = ex;
+            }
+            finally
+            {
+                ready.Set();
+            }
+
+            if (failure is not null) return;
+            try
+            {
+                while (GetMessage(out var message, IntPtr.Zero, 0, 0) > 0)
+                {
+                    TranslateMessage(ref message);
+                    DispatchMessage(ref message);
+                }
+            }
+            finally
+            {
+                UnhookWindowsHookEx(_hookHandle);
+                _hookHandle = IntPtr.Zero;
+            }
+        }) { IsBackground = true, Name = "MacBridgeWin mouse hook" };
+        _thread.Start();
+        ready.Wait();
+        if (failure is not null)
+        {
+            _thread.Join();
+            _thread = null;
+            throw new InvalidOperationException("Failed to start the mouse hook thread.", failure);
+        }
+    }
+
+    private void InstallHook()
+    {
 
         using var currentProcess = Process.GetCurrentProcess();
         using var currentModule = currentProcess.MainModule;
@@ -66,13 +115,19 @@ public sealed class MouseHookService : IDisposable
 
     public void Stop()
     {
-        if (_hookHandle == IntPtr.Zero)
+        if (_thread is null)
         {
             return;
         }
 
-        UnhookWindowsHookEx(_hookHandle);
-        _hookHandle = IntPtr.Zero;
+        if (_thread.IsAlive)
+        {
+            PostThreadMessage(_threadId, 0x0012, UIntPtr.Zero, IntPtr.Zero);
+            _thread.Join();
+        }
+        _thread = null;
+        _threadId = 0;
+        _gestureEnded();
         _isCapturing = false;
         _hasGestureMovement = false;
         _points.Clear();
@@ -90,6 +145,14 @@ public sealed class MouseHookService : IDisposable
             return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
         }
 
+        var message = wParam.ToInt32();
+        // Most global notifications are ordinary movement or unrelated buttons.
+        // Avoid marshaling their native payload when no gesture is being captured.
+        if (message != WmRButtonDown && !(_isCapturing && (message == WmMouseMove || message == WmRButtonUp)))
+        {
+            return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
+        }
+
         var hookInfo = Marshal.PtrToStructure<MsLlHookStruct>(lParam);
         var isSynthetic = (hookInfo.Flags & LlmhfInjected) != 0
             && hookInfo.DwExtraInfo == SyntheticMouseInputSender.ExtraInfoMarker;
@@ -99,7 +162,6 @@ public sealed class MouseHookService : IDisposable
             return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
         }
 
-        var message = wParam.ToInt32();
         var point = new GesturePoint(hookInfo.Point.X, hookInfo.Point.Y);
 
         switch (message)
@@ -130,7 +192,8 @@ public sealed class MouseHookService : IDisposable
     private void FinishCapture(GesturePoint releasePoint)
     {
         _isCapturing = false;
-        var result = _recognize(_points);
+        // Ordinary clicks need no process lookup or profile resolution.
+        var result = _hasGestureMovement ? _recognize(_points) : GestureRecognitionResult.None;
         var hadGestureMovement = _hasGestureMovement;
         _points.Clear();
         _hasGestureMovement = false;
@@ -145,25 +208,24 @@ public sealed class MouseHookService : IDisposable
             return;
         }
 
-        if (!hadGestureMovement)
-        {
-            _sendRightClick(releasePoint.X, releasePoint.Y);
-        }
+        _sendRightClick(releasePoint.X, releasePoint.Y);
     }
 
     private void CaptureMove(GesturePoint point)
     {
+        var started = false;
         if (!_hasGestureMovement && DistanceSquared(_startPoint, point) >= FeedbackStartDistancePixels * FeedbackStartDistancePixels)
         {
             _hasGestureMovement = true;
             _gestureStarted(_startPoint);
             _gestureMoved(point);
+            started = true;
         }
 
         if (DistanceSquared(_lastCapturedPoint, point) >= MoveSampleDistancePixels * MoveSampleDistancePixels)
         {
             AddPoint(point);
-            if (_hasGestureMovement)
+            if (_hasGestureMovement && !started)
             {
                 _gestureMoved(point);
             }
@@ -194,6 +256,31 @@ public sealed class MouseHookService : IDisposable
     }
 
     private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct Message
+    {
+        public IntPtr Hwnd;
+        public uint Id;
+        public UIntPtr WParam;
+        public IntPtr LParam;
+        public uint Time;
+        public Point Point;
+        public uint Private;
+    }
+
+    [DllImport("kernel32.dll")]
+    private static extern uint GetCurrentThreadId();
+    [DllImport("user32.dll")]
+    private static extern bool PeekMessage(out Message message, IntPtr hwnd, uint min, uint max, uint remove);
+    [DllImport("user32.dll")]
+    private static extern int GetMessage(out Message message, IntPtr hwnd, uint min, uint max);
+    [DllImport("user32.dll")]
+    private static extern bool TranslateMessage(ref Message message);
+    [DllImport("user32.dll")]
+    private static extern IntPtr DispatchMessage(ref Message message);
+    [DllImport("user32.dll")]
+    private static extern bool PostThreadMessage(uint threadId, uint message, UIntPtr wParam, IntPtr lParam);
 
     [StructLayout(LayoutKind.Sequential)]
     private readonly struct Point

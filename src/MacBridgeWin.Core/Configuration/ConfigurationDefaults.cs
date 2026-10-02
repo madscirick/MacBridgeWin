@@ -141,7 +141,7 @@ public static class ConfigurationDefaults
 
     private static ApplicationProfileConfiguration CreateBrowserProfile(string name, string processName)
     {
-        return new ApplicationProfileConfiguration
+        var profile = new ApplicationProfileConfiguration
         {
             Name = name,
             ProcessName = processName,
@@ -159,6 +159,20 @@ public static class ConfigurationDefaults
                 ]
             }
         };
+        AddMissingChromeNavigationGestures(profile);
+        return profile;
+    }
+
+    private static bool AddMissingChromeNavigationGestures(ApplicationProfileConfiguration profile)
+    {
+        if (!string.Equals(profile.ProcessName, "chrome.exe", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var changed = AddMissingProfileGestureAction(profile, "Down,Left", GestureActionCatalog.BrowserBack);
+        changed |= AddMissingProfileGestureAction(profile, "Down,Right", GestureActionCatalog.BrowserForward);
+        return changed;
     }
 
     private static bool AddMissingBrowserGestureActions(AppConfiguration configuration)
@@ -175,6 +189,7 @@ public static class ConfigurationDefaults
             changed |= AddMissingProfileGestureAction(profile, UpGesture, GestureActionCatalog.ScrollToTop);
             changed |= AddMissingProfileGestureAction(profile, DownGesture, GestureActionCatalog.ScrollToBottom);
             changed |= AddMissingProfileGestureAction(profile, CrossGesture, GestureActionCatalog.CloseTab);
+            changed |= AddMissingChromeNavigationGestures(profile);
         }
 
         return changed;
