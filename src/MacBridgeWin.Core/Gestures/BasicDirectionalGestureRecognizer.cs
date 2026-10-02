@@ -4,6 +4,18 @@ public sealed class BasicDirectionalGestureRecognizer
 {
     private const double DominanceRatio = 1.35;
 
+    public static bool HasThresholdMovement(IReadOnlyList<GesturePoint> points, int thresholdPixels)
+    {
+        if (points.Count < 2 || thresholdPixels <= 0) return false;
+        var start = points[0];
+        for (var index = 1; index < points.Count; index++)
+        {
+            if (Math.Abs((long)points[index].X - start.X) >= thresholdPixels
+                || Math.Abs((long)points[index].Y - start.Y) >= thresholdPixels) return true;
+        }
+        return false;
+    }
+
     public GestureRecognitionResult Recognize(IReadOnlyList<GesturePoint> points, int thresholdPixels)
     {
         var sequence = RecognizeSequence(points, thresholdPixels);
